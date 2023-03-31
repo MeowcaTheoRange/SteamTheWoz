@@ -19,7 +19,7 @@ async function getScott (req, res) {
   const ctx = canvas.getContext('2d');
 
   var hero = await loadImage(`https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/library_hero.jpg`).catch(() => "404");
-	var scott = await loadImage(`/public/woz${scottID}.png`).catch(() => "404");
+	var scott = await loadImage(path.join(__dirname, `public`, `woz${scottID}.png`)).catch(() => "404");
 	var logo = await loadImage(`https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/logo.png`).catch(() => "404");
 
   if (scott === "404") {
