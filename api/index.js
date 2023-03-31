@@ -1,4 +1,4 @@
-var { createCanvas, loadImage } = require('canvas');
+var { createCanvas, loadImage } = require('@napi-rs/canvas');
 var path = require("path");
 const router = require("express").Router();
 
