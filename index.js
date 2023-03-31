@@ -3,11 +3,11 @@ var path = require("path");
 const express = require("express");
 const app = express();
 
-app.use(express.static('public'));
 
-app.get('/', getScott);
 app.get('/:id', getScott);
 app.get('/:id/:scott', getScott);
+app.use(express.static('public'));
+app.get('/', getScott);
 
 async function getScott (req, res) {
   var gameID = req.params.id ?? 620;
