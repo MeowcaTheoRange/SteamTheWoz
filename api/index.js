@@ -1,10 +1,10 @@
-var { createCanvas, loadImage } = require('canvas/types');
+var { createCanvas, loadImage } = require('canvas');
 var path = require("path");
-const app = require("express")();
+const router = require("express").Router();
 
-app.get('/', getScott);
-app.get('/:id', getScott);
-app.get('/:id/:scott', getScott);
+router.get('/', getScott);
+router.get('/:id', getScott);
+router.get('/:id/:scott', getScott);
 
 async function getScott (req, res) {
   var gameID = req.params.id ?? 620;
@@ -17,7 +17,7 @@ async function getScott (req, res) {
   const ctx = canvas.getContext('2d');
 
   var hero = await loadImage(`https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/library_hero.jpg`).catch(() => "404");
-	var scott = await loadImage(path.join(__dirname, 'public', `woz${scottID}.png`)).catch(() => "404");
+	var scott = await loadImage(`/public/woz${scottID}.png`).catch(() => "404");
 	var logo = await loadImage(`https://cdn.cloudflare.steamstatic.com/steam/apps/${gameID}/logo.png`).catch(() => "404");
 
   if (scott === "404") {
@@ -46,4 +46,4 @@ async function getScott (req, res) {
 	return;
 }
 
-module.exports = app;
+module.exports = router;
