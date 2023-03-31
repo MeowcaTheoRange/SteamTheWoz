@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/:id",
+      "function": "app"
+    },
+    {
+      "source": "/:id/:scott",
+      "function": "app"
+    },
+    {
+      "source": "/",
+      "function": "app"
+    }
+  ]
+}
