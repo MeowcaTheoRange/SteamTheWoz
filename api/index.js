@@ -1,4 +1,4 @@
-var { createCanvas, loadImage } = require('canvas');
+var { createCanvas, loadImage } = require('canvas/types');
 var path = require("path");
 const app = require("express")();
 
