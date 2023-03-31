@@ -11,7 +11,7 @@ async function getScott (req, res) {
   var scottID = req.params.scott ?? Math.floor(Math.random() * 7);
 
   res.set('Cache-Control', "public, max-age=300, s-maxage=600");
-  res.contentType('image/png');
+  res.setHeader('Content-Type', 'image/png');
 
   const canvas = createCanvas(1280, 720);
   const ctx = canvas.getContext('2d');
@@ -22,13 +22,13 @@ async function getScott (req, res) {
 
   if (scott === "404") {
 		console.log("Scott error: " + scottID);
-		res.contentType('text/plain');
+		res.setHeader('Content-Type', 'text/plain');
 		res.status(404).send(`Scott ID ${scottID} does not exist.`);
 		return;
   }
 	if (hero === "404" || logo === "404") {
 		console.log("404 error: " + gameID);
-		res.contentType('text/plain');
+		res.setHeader('Content-Type', 'text/plain');
 		res.status(404).send(`Steam ID ${gameID} does not have logo, hero image, or does not exist.`);
 		return;
 	}
