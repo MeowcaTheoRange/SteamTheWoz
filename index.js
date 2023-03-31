@@ -7,7 +7,7 @@ const app = express();
 app.get('/thumb/:id', getScott);
 app.get('/thumb/:id/:scott', getScott);
 app.get('/thumb/', getScott);
-app.use(express.static('public'));
+app.use("/public", express.static('public'));
 
 async function getScott (req, res) {
   var gameID = req.params.id ?? 620;
