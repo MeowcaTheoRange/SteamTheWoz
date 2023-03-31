@@ -3,7 +3,6 @@ var path = require("path");
 const express = require("express");
 const app = express();
 
-
 app.get('/thumb/:id', getScott);
 app.get('/thumb/:id/:scott', getScott);
 app.get('/thumb/', getScott);
@@ -13,7 +12,7 @@ async function getScott (req, res) {
   var scottID = req.params.scott ?? Math.floor(Math.random() * 7);
 
   res.set('Cache-Control', "public, max-age=300, s-maxage=600");
-  res.setHeader('Content-Type', 'image/png');
+  res.set('Content-Type', 'image/png');
 
   const canvas = createCanvas(1280, 720);
   const ctx = canvas.getContext('2d');
@@ -44,7 +43,7 @@ async function getScott (req, res) {
   ctx.shadowColor = '#000';
   ctx.shadowBlur = 16;
 	ctx.drawImage(logo, 64, Math.max(240 - (newHeight / 2), 32), 800, newHeight);
-	res.send(canvas.toBuffer());
+	res.send(await canvas.encode("png"));
 	return;
 }
 
