@@ -4,12 +4,12 @@ const express = require("express");
 const app = express();
 
 app.get('/:id', getScott);
-app.get('/:id/:scott', getScott);
 app.get('/', getScott);
 
 async function getScott (req, res) {
   var gameID = req.params.id ?? 620;
-  var scottID = req.params.scott ?? Math.floor(Math.random() * 7);
+  var scottID = req.query.scott ?? Math.floor(Math.random() * 9);
+  var align = req.query.align ?? "center";
 
   res.set('Cache-Control', "public, max-age=300, s-maxage=600");
   res.set('Content-Type', 'image/png');
@@ -33,16 +33,30 @@ async function getScott (req, res) {
 		res.status(404).send(`Steam ID ${gameID} does not have logo, hero image, or does not exist.`);
 		return;
 	}
-
+	var xalign;
+	switch (align) {
+		case "left":
+			xalign = 0;
+			break;
+		case "right":
+			xalign = -950;
+			break;
+		default:
+			xalign = -505;
+			break;
+	}
 	console.log("Generating: " + gameID);
-	ctx.drawImage(hero, -505, 0, 2229, 720);
+	ctx.drawImage(hero, xalign, 0, 2229, 720);
 	ctx.drawImage(scott, 0, 0, 1280, 720);
 
 	const newHeight = 800 / (logo.width / logo.height);
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = '#000';
   ctx.shadowColor = '#000';
   ctx.shadowBlur = 16;
-	ctx.drawImage(logo, 64, Math.max(240 - (newHeight / 2), 32), 800, newHeight);
+
+	if (scottID === "stash")
+		ctx.drawImage(logo, 400, Math.min(560 - (newHeight / 2), 669 - newHeight), 800, newHeight);
+	else ctx.drawImage(logo, 64, Math.max(240 - (newHeight / 2), 32), 800, newHeight);
 	res.send(await canvas.encode("png"));
 	return;
 }
